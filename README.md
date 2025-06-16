@@ -156,4 +156,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ## 👨‍💻 Developed By
 
 **Muqnit Ur Rehman**  
-[GitHub](https://github.com/muqniturrehman) • [LinkedIn](https://www.linkedin.com/in/muqnit-ur-rehman-1a5b492b0) • [Kaggle](https://www.kaggle.com/muqniturrehman) • [Email] (mailto:muqniturrehman@gmail.com) 
+[GitHub](https://github.com/muqniturrehman) • [LinkedIn](https://www.linkedin.com/in/muqnit-ur-rehman-1a5b492b0) • [Kaggle](https://www.kaggle.com/muqniturrehman) • [Email](mailto:muqniturrehman@gmail.com) 
