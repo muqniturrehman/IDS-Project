@@ -13,6 +13,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
+st.set_page_config(page_title="Diabetes Prediction App", layout='wide')
 
 @st.cache_data
 def load_data():
@@ -37,7 +38,6 @@ def load_decision_boundary_image(path):
 
 
 # --- Streamlit UI ---
-st.set_page_config(layout='wide')
 st.title("🔍 Diabetes Prediction App")
 st.markdown("---")
 st.markdown("Created by **Muqnit Ur Rehman** | 🧠 Machine Learning Enthusiast")
