@@ -4,6 +4,9 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import itertools
+import joblib
+import os
+from PIL import Image
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import LogisticRegression
@@ -11,73 +14,31 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 
+@st.cache_data
+def load_data():
+    return pd.read_csv("Kaggle_diabetes.csv")
+df = load_data()
 
-def plot_all_decision_boundaries(df):
-    numeric_features = df.select_dtypes(include=[np.number]).columns.drop('Outcome')
-    feature_pairs = list(itertools.combinations(numeric_features, 2))
+@st.cache_resource
+def load_models():
+    rf = joblib.load("rf_model.pkl")
+    log = joblib.load("log_model.pkl")
+    scaler = joblib.load("scaler.pkl")
+    X_test, y_test = joblib.load("test_data.pkl")  
+    return rf, log, scaler, X_test, y_test
 
-    cols = 3
-    rows = (len(feature_pairs) + cols - 1) // cols
-    fig, axes = plt.subplots(rows, cols, figsize=(6 * cols, 4 * rows))
-    axes = axes.flatten()
+rf_model, log_model, scaler, X_test, y_test = load_models()
 
-    for idx, (f1, f2) in enumerate(feature_pairs):
-        X = df[[f1, f2]]
-        y = df['Outcome']
+@st.cache_data
+def load_decision_boundary_image(path):
+    return Image.open(path)
 
-        model = LogisticRegression()
-        model.fit(X, y)
-
-        x_min, x_max = X[f1].min() - 1, X[f1].max() + 1
-        y_min, y_max = X[f2].min() - 1, X[f2].max() + 1
-        xx, yy = np.meshgrid(np.linspace(x_min, x_max, 200),
-                             np.linspace(y_min, y_max, 200))
-        Z = model.predict(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)
-
-        ax = axes[idx]
-        ax.contourf(xx, yy, Z, alpha=0.3, cmap='coolwarm')
-        ax.scatter(X[f1][y == 0], X[f2][y == 0], label='0', alpha=0.6, edgecolor='k', s=15)
-        ax.scatter(X[f1][y == 1], X[f2][y == 1], label='1', alpha=0.6, edgecolor='k', s=15)
-        ax.set_xlabel(f1)
-        ax.set_ylabel(f2)
-        ax.set_title(f'{f1} vs {f2}')
-
-    # Remove unused axes
-    for j in range(idx + 1, len(axes)):
-        fig.delaxes(axes[j])
-
-# Set the title and adjust layout
-    fig.suptitle('Logistic Regression Decision Boundaries for All Numeric Feature Pairs', fontsize=16, y=1.02)
-    fig.tight_layout(rect=[0, 0, 1, 0.98])  # Reserve space for title
-    return fig
-
-
-
-
-# Load dataset
-df = pd.read_csv("kaggle_diabetes.csv")
-
-# Preprocessing
-X_raw = df.drop('Outcome', axis=1)
-y = df['Outcome']
-
-scaler = MinMaxScaler()
-X = scaler.fit_transform(X_raw)
-X = pd.DataFrame(X, columns=X_raw.columns)
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Models
-log_model = LogisticRegression()
-log_model.fit(X_train, y_train)
-
-rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
-rf_model.fit(X_train, y_train)
 
 # --- Streamlit UI ---
 st.set_page_config(layout='wide')
 st.title("🔍 Diabetes Prediction App")
-
+st.markdown("---")
+st.markdown("Created by **Muqnit Ur Rehman** | 🧠 Machine Learning Enthusiast")
 # --- Sidebar Navigation ---
 selected_page = st.sidebar.selectbox(
     "Choose a page",
@@ -281,12 +242,12 @@ elif selected_page == "Conclusion And Evaluation":
         st.markdown("---")
 
 
-        # OPTIONAL: Use saved plot from your notebook, or recreate here
         try:
-            fig = plot_all_decision_boundaries(df)
-            st.pyplot(fig)
+            image_path = "saved_graphs/decision_boundaries.png"
+            img = load_decision_boundary_image(image_path)
+            st.image(img, caption="📊 Logistic Regression Decision Boundaries", use_container_width =True)
         except Exception as e:
-            st.info("⚠️ Decision boundary plots not available or plotting failed.")
+            st.warning("⚠️ Could not load the decision boundary image.")
             st.text(f"Reason: {e}")
 
     with tab2:
