@@ -16,7 +16,9 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 
 @st.cache_data
 def load_data():
-    return pd.read_csv("kaggle_diabetes.csv")
+    file_path = os.path.join(os.path.dirname(__file__), 'kaggle_diabetes.csv')
+    return pd.read_csv(file_path)
+
 df = load_data()
 
 @st.cache_resource
