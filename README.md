@@ -123,15 +123,7 @@ Model performance graphs are saved to the `saved_graphs/` folder.
 
 ---
 
-## 📚 Dataset
 
-- **Name**: Pima Indians Diabetes Database
-- **Source**: [Kaggle Diabetes Dataset](https://www.kaggle.com/datasets/mathchi/diabetes-data-set)
-- **License**: Public Domain
-
-This dataset is widely used in health-based ML projects and provides sufficient features for classification tasks.
-
----
 
 ## 🤖 Future Improvements
 
@@ -143,19 +135,6 @@ This dataset is widely used in health-based ML projects and provides sufficient 
 
 ---
 
-## 🤝 Contributing
-
-Want to contribute? Awesome!
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -m 'Add some feature'`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Open a Pull Request
-
-All contributions, issues, and feature requests are welcome.
-
----
 
 ## 📝 License
 
@@ -171,3 +150,10 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - [Matplotlib](https://matplotlib.org/)
 - [Seaborn](https://seaborn.pydata.org/)
 - [Kaggle](https://www.kaggle.com/)
+
+---
+
+## 👨‍💻 Developed By
+
+**Muqnit Ur Rehman**  
+[GitHub](https://github.com/muqniturrehman) • [LinkedIn](https://www.linkedin.com/in/muqnit-ur-rehman-1a5b492b0) • [Kaggle](https://www.kaggle.com/muqniturrehman) • [Email] (mailto:muqniturrehman@gmail.com) 
